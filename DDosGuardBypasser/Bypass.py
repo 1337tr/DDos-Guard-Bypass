@@ -262,19 +262,19 @@ class ddosGuard:
             if targetSite.endswith('/'):
                 targetSite = targetSite[:-1]
 
-            resp = self.Client.get(targetSite, headers=self.Headers)
+            resp = self.Client.get(targetSite, headers=self.Headers, proxy=self.Proxy)
             if resp.status_code == 403:
-                self.Client.get(f'{targetSite}/.well-known/ddos-guard/check?context=free_splash')
-                resp = self.Client.get('https://check.ddos-guard.net/check.js')
+                self.Client.get(f'{targetSite}/.well-known/ddos-guard/check?context=free_splash', proxy=self.Proxy)
+                resp = self.Client.get('https://check.ddos-guard.net/check.js', proxy=self.Proxy)
                 if resp.status_code == 200:
                     resp = resp.text.split("'")
                     src = targetSite + resp[1]
                     src2 = resp[3]
-                    self.Client.get(src)
-                    self.Client.get(src2)
-                    resp = self.Client.post(targetSite+'/.well-known/ddos-guard/mark/', json=self.Payload)
+                    self.Client.get(src, proxy=self.Proxy)
+                    self.Client.get(src2, proxy=self.Proxy)
+                    resp = self.Client.post(targetSite+'/.well-known/ddos-guard/mark/', json=self.Payload, proxy=self.Proxy)
                     if resp.status_code == 200:
-                        resp = self.Client.get(targetSite)
+                        resp = self.Client.get(targetSite, proxy=self.Proxy)
                         if not resp.status_code == 403:
                             return {'Success': True, 'Cookies': resp.cookies.get_dict(), 'Session': self.Client}
                     else:
