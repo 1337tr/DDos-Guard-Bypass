@@ -1,6 +1,6 @@
 <h1 align='center'>Bypass DDos-Guard.net</h1>
 
-<p align='center'>  Python3 requests-based DDos-Guard bypass </p>
+<p align='center'>  Python3 requests-based DDos-Guard bypass using TLS3</p>
 
 ## Features
 * Requests-based
